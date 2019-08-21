@@ -1,0 +1,31 @@
+{
+  "name": "hexo-external-link",
+  "version": "1.0.0",
+  "description": "hexo plugin named `hexo-external-link`",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^0.20.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hvnobug/hexo-external-link.git"
+  },
+  "keywords": [
+    "hexo"
+  ],
+  "files": [
+    "go.html",
+    "index.js",
+    "lib/"
+  ],
+  "author": "hvnobug",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hvnobug/hexo-external-link/issues"
+  },
+  "homepage": "https://github.com/hvnobug/hexo-external-link#readme"
+}
