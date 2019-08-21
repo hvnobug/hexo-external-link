@@ -4,7 +4,8 @@
   "description": "hexo plugin named `hexo-external-link`",
   "main": "index.js",
   "dependencies": {
-    "cheerio": "^0.20.0"
+    "cheerio": "^0.20.0",
+    "js-base64": "^2.5.1"
   },
   "devDependencies": {},
   "scripts": {
