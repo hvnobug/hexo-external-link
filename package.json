@@ -1,6 +1,6 @@
 {
   "name": "hexo-external-link",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "hexo plugin named `hexo-external-link`",
   "main": "index.js",
   "dependencies": {
