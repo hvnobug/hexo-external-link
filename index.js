@@ -1,11 +1,11 @@
-const config = hexo.config.external_link = Object.assign({
+const config = hexo.config.hexo_external_link = Object.assign({
     enable: false,
     enable_base64_encode: false,
     url_param_name: 'u',
     html_file_name: 'go.html',
     target_blank: true,
     link_rel: 'external nofollow noopener noreferrer'
-}, hexo.config.external_link);
+}, hexo.config.hexo_external_link);
 const domain = hexo.config.domain;
 const root = hexo.config.root || '/';
 if (config.enable) {
