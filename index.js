@@ -1,5 +1,3 @@
-const cheerio = require('cheerio');
-const Base64 = require('js-base64').Base64;
 const config = hexo.config.hexo_external_link = Object.assign({
     enable: false,
     enable_base64_encode: false,
@@ -10,29 +8,35 @@ const config = hexo.config.hexo_external_link = Object.assign({
 }, hexo.config.hexo_external_link);
 const domain = hexo.config.domain;
 const root = hexo.config.root || '/';
-const UrlReg = '^((http|https|thunder|qqdl|ed2k|Flashget|qbrowser|ftp|rtsp|mms)://)';
 if (config.enable) {
-    hexo.extend.filter.register('before_generate', function () {
-        hexo.extend.filter.register('after_render:html', data => {
-            const $ = cheerio.load(data);
-            $('a').each(function (i, elem) {
-                const href = $(elem).attr('href');
-                if (href && href.match(UrlReg)) {
-                    const strs = href.split('/');
-                    if (strs.length >= 3) {
-                        const host = strs[2];
-                        if (host !== domain) {
-                            $(elem).attr('href', `${root}${config.html_file_name}?${config.url_param_name}=${config.enable_base64_encode ? Base64.encode(href) : href}`)
-                                .attr('rel', config.link_rel);
-                            if (config.target_blank) {
-                                $(elem).attr('target', '_blank');
-                            }
+    hexo.extend.filter.register('after_render:html', function (htmlContent) {
+        let injectExtraScript = function () {
+            return `
+            <script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script>
+            <script>
+            $('a').each(function() {
+              const $this = $(this);
+              const href = $this.attr('href');
+              if (href && href.match('^((http|https|thunder|qqdl|ed2k|Flashget|qbrowser|ftp|rtsp|mms)://)')) {
+                const strs = href.split('/');
+                if (strs.length >= 3) {
+                    const host = strs[2];
+                    if (host !== '${domain}') {
+                        $this.attr('href', '${root}${config.html_file_name}?${config.url_param_name}=${config.enable_base64_encode ? "'+Base64.encode(href)+'" : "'+href+'"}').attr('rel', '${config.link_rel}');
+                        if (${config.target_blank}) {
+                            $this.attr('target', '_blank');
                         }
                     }
                 }
+              }
             });
-            return $.html();
-        })
+            </script>`;
+        };
+        if (/<\/body>/gi.test(htmlContent)) {
+            let lastIndex = htmlContent.lastIndexOf('</body>');
+            htmlContent = htmlContent.substring(0, lastIndex) + injectExtraScript() + htmlContent.substring(lastIndex, htmlContent.length);
+        }
+        return htmlContent;
     });
     hexo.extend.generator.register('external_link', require('./lib/generator'));
 }

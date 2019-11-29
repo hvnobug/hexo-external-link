@@ -3,10 +3,6 @@
   "version": "1.0.4",
   "description": "hexo plugin named `hexo-external-link`",
   "main": "index.js",
-  "dependencies": {
-    "cheerio": "^0.20.0",
-    "js-base64": "^2.5.1"
-  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
