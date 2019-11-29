@@ -17,7 +17,7 @@ $ npm install hexo-external-link --save
 在`Hexo`根目录的`_config.yml`文件中添加如下配置。
 
 ``` yaml
-hexo_external_link:
+external_link:
   enable: true
   enable_base64_encode: true
   url_param_name: 'u'
