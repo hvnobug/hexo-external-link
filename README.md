@@ -17,8 +17,7 @@ $ npm install hexo-external-link --save
 在`Hexo`根目录的`_config.yml`文件中添加如下配置。
 
 ``` yaml
-## 配置 domain,go.html 为了防止外链盗用 对域名进行的判断,除了 localhost 和 domain 之外调用会跳到主页
-domain: your_domain
+
 hexo_external_link:
   enable: true
   enable_base64_encode: true
@@ -26,6 +25,8 @@ hexo_external_link:
   html_file_name: 'go.html'
   target_blank: true
   link_rel: 'external nofollow noopener noreferrer'
+  domain: 'your_domain' # 如果开启了防盗链
+  safety_chain: true
 ```
 
 - **enable** - 是否开启`hexo_external_link`插件 - 默认 false
@@ -34,3 +35,5 @@ hexo_external_link:
 - **html_file_name** - 跳转到外链的页面文件路径 - 默认 'go.html'
 - **target_blank** - 是否为外链的`a`标签添加`target='_blank'` - 默认 true
 - **link_rel** - 设置外链的`a`标签的rel属性 - 默认 'external nofollow noopener noreferrer'
+- **domain** - 如果开启了防盗链,除了 localhost 和 domain 之外调用会跳到主页,同时也是判断链接是否为外链的依据 - 默认 window.location.host
+- **safety_chain** - go.html 为了防止外链盗用 对域名进行的判断 - 默认 false
