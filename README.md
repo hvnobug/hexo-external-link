@@ -17,6 +17,8 @@ $ npm install hexo-external-link --save
 在`Hexo`根目录的`_config.yml`文件中添加如下配置。
 
 ``` yaml
+## 配置 domain,go.html 为了防止外链盗用 对域名进行的判断,除了 localhost 和 domain 之外调用会跳到主页
+domain: your_domain
 hexo_external_link:
   enable: true
   enable_base64_encode: true
