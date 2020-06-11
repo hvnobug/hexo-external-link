@@ -6,16 +6,22 @@ const config = hexo.config.hexo_external_link = Object.assign({
     target_blank: true,
     domain: '',
     safety_chain: false,
-    link_rel: 'external nofollow noopener noreferrer'
+    link_rel: 'external nofollow noopener noreferrer',
+    ignore_attrs: []
 }, hexo.config.hexo_external_link);
+const default_ignore_attrs = ['data-fancybox','ignore-external-link'];
+// 合并去重
+const ignore_attrs = Array.from(new Set(default_ignore_attrs.concat(config.ignore_attrs)));
 const root = hexo.config.root || '/';
 if (config.enable) {
     hexo.extend.filter.register('after_render:html', function (htmlContent) {
         const injectExtraScript = () => `
         <script src="//cdn.jsdelivr.net/npm/js-base64/base64.min.js"></script>
         <script>
+        const hasAttr = (e,a) => a.some(_=> e.attr(_)!==undefined);
         $('a').each(function() {
           const $this = $(this);
+          if(hasAttr($this,${JSON.stringify(ignore_attrs)})) return;
           const href = $this.attr('href');
           if (href && href.match('^((http|https|thunder|qqdl|ed2k|Flashget|qbrowser|ftp|rtsp|mms)://)')) {
             const strs = href.split('/');
